@@ -2,6 +2,7 @@ services:
   db:
     image: postgres
     restart: always
+    ports: 5432:5432
     environment:
       - POSTGRES_DB=${DB}
       - POSTGRES_USER=${USER}
@@ -9,10 +10,10 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=md5
       - PG_CONFIG=/etc/postgresql/postgresql.conf
     volumes:
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - pgdata:/var/lib/postgresql/data
-      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${VAULT_USER} -d ${VAULT_DB} -h localhost" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${USER} -d ${DB} -h localhost" ]
       interval: 30s
       timeout: 5s
       retries: 5
