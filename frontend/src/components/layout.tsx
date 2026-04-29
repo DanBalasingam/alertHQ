@@ -1,10 +1,10 @@
-import Navbar from './navbar';
+import Sidebar from './sidebar';
 import { Outlet } from 'react-router';
 
 function Layout() {
     return (
         <>
-            <Navbar />
+            <Sidebar />
             <main className="page-content">
                 <Outlet />
             </main>
