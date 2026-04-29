@@ -28,6 +28,12 @@ body {
   margin-left: 10px;
 }
 
+.nav-sec-title {
+  font-size: 10px;
+  font-weight: 500;
+  color: #575963;
+}
+
 .nav-body {
   margin-left: 10px;
 }
