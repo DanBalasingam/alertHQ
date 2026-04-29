@@ -1,0 +1,1262 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0E0F12;
+    --bg1: #141519;
+    --bg2: #1C1D22;
+    --bg3: #24252B;
+    --border: rgba(255,255,255,0.07);
+    --border-md: rgba(255,255,255,0.12);
+    --text: #E8E9ED;
+    --text-muted: #7A7D8A;
+    --text-dim: #4A4D5A;
+    --accent: #4F6EF7;
+    --accent-dim: rgba(79,110,247,0.15);
+    --accent-glow: rgba(79,110,247,0.08);
+    --red: #E84040;
+    --red-dim: rgba(232,64,64,0.12);
+    --amber: #F59E0B;
+    --amber-dim: rgba(245,158,11,0.12);
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.12);
+    --blue: #38BDF8;
+    --blue-dim: rgba(56,189,248,0.10);
+    --purple: #A78BFA;
+    --purple-dim: rgba(167,139,250,0.12);
+    --mono: 'Geist Mono', monospace;
+    --sans: 'Geist', sans-serif;
+    --radius: 6px;
+    --radius-lg: 10px;
+    --radius-xl: 14px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.3px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .logo-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .nav-btn {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: var(--radius);
+    transition: all 0.15s;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--text);
+    background: var(--bg3);
+  }
+
+  /* SECTIONS */
+  section {
+    display: none;
+    padding: 28px 24px;
+    max-width: 780px;
+  }
+  section.active { display: block; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    font-family: var(--mono);
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.4px;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  /* COLORS */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .color-chip {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .color-swatch {
+    height: 48px;
+  }
+
+  .color-info {
+    padding: 8px 10px;
+    background: var(--bg2);
+  }
+
+  .color-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1px;
+  }
+
+  .color-hex {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  .color-usage {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* STATUS BADGES */
+  .badge-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: var(--mono);
+    border: 1px solid transparent;
+  }
+
+  .badge-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .badge.critical { background: var(--red-dim); color: var(--red); border-color: rgba(232,64,64,0.2); }
+  .badge.high { background: var(--amber-dim); color: var(--amber); border-color: rgba(245,158,11,0.2); }
+  .badge.medium { background: rgba(249,115,22,0.1); color: #F97316; border-color: rgba(249,115,22,0.2); }
+  .badge.low { background: var(--blue-dim); color: var(--blue); border-color: rgba(56,189,248,0.2); }
+  .badge.resolved { background: var(--green-dim); color: var(--green); border-color: rgba(34,197,94,0.2); }
+  .badge.ack { background: var(--purple-dim); color: var(--purple); border-color: rgba(167,139,250,0.2); }
+  .badge.firing { background: var(--red-dim); color: var(--red); border-color: rgba(232,64,64,0.2); }
+  .badge.pending { background: var(--amber-dim); color: var(--amber); border-color: rgba(245,158,11,0.2); }
+  .badge.inactive { background: var(--bg3); color: var(--text-muted); border-color: var(--border-md); }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .type-sample:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+  .type-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    margin-bottom: 6px;
+  }
+
+  .type-preview {
+    margin-bottom: 4px;
+  }
+
+  .type-meta {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  /* LAYOUT MOCKUP */
+  .layout-mock {
+    background: var(--bg);
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .mock-sidebar {
+    width: 220px;
+    background: var(--bg1);
+    border-right: 1px solid var(--border);
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .mock-main {
+    flex: 1;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .mock-topbar {
+    height: 48px;
+    background: var(--bg1);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+  }
+
+  .mock-body {
+    display: flex;
+    flex: 1;
+    height: 380px;
+  }
+
+  .mock-nav-item {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 7px 10px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: default;
+  }
+
+  .mock-nav-item.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .mock-nav-item .icon-box {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .mock-section-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    padding: 10px 10px 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .mock-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .mock-stat {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+  }
+
+  .mock-stat-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    font-family: var(--mono);
+  }
+
+  .mock-stat-value {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+  }
+
+  .mock-table {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .mock-table-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+
+  .mock-table-row:last-child { border-bottom: none; }
+  .mock-table-row.header { color: var(--text-dim); font-family: var(--mono); font-size: 10px; background: var(--bg2); }
+
+  .mock-col-name { flex: 2; }
+  .mock-col-sev { flex: 1; }
+  .mock-col-src { flex: 1; color: var(--text-muted); font-family: var(--mono); font-size: 10px; }
+  .mock-col-age { width: 60px; text-align: right; color: var(--text-muted); font-family: var(--mono); font-size: 10px; }
+
+  /* COMPONENTS */
+  .component-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .comp-box {
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+  }
+
+  .comp-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Alert row */
+  .alert-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg2);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 6px;
+    cursor: default;
+  }
+
+  .alert-row:hover {
+    border-color: var(--border-md);
+    background: var(--bg3);
+  }
+
+  .alert-sev-bar {
+    width: 3px;
+    border-radius: 2px;
+    align-self: stretch;
+    flex-shrink: 0;
+    min-height: 36px;
+  }
+
+  .alert-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .alert-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  .alert-right {
+    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Input */
+  .mock-input {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius);
+    padding: 7px 10px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: var(--sans);
+    outline: none;
+    margin-bottom: 8px;
+  }
+
+  .mock-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  .mock-select {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius);
+    padding: 7px 10px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: var(--sans);
+    margin-bottom: 8px;
+    appearance: none;
+  }
+
+  .form-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.12s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border-color: var(--border-md);
+  }
+  .btn-ghost:hover { background: var(--bg3); color: var(--text); }
+
+  .btn-danger {
+    background: var(--red-dim);
+    color: var(--red);
+    border-color: rgba(232,64,64,0.2);
+  }
+  .btn-danger:hover { background: rgba(232,64,64,0.2); }
+
+  .btn-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  /* Incident card */
+  .incident-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--red);
+  }
+
+  .incident-card.high { border-left-color: var(--amber); }
+  .incident-card.medium { border-left-color: #F97316; }
+
+  .incident-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .incident-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  /* Spacing guide */
+  .space-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .space-block {
+    background: var(--accent-dim);
+    border: 1px dashed rgba(79,110,247,0.3);
+    border-radius: 2px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .space-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+  }
+
+  /* Chip tag */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: var(--bg3);
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius);
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border-md);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 16px 16px;
+    font-size: 12px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -14px;
+    top: 5px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--border-md);
+    background: var(--bg2);
+  }
+
+  .timeline-dot.active { background: var(--accent); border-color: var(--accent); }
+  .timeline-dot.critical { background: var(--red); border-color: var(--red); }
+
+  .timeline-title { font-weight: 500; color: var(--text); }
+  .timeline-time { font-size: 10px; color: var(--text-dim); font-family: var(--mono); }
+
+  /* Code block */
+  .code {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .code .key { color: var(--accent); }
+  .code .val { color: var(--green); }
+  .code .str { color: var(--amber); }
+  .code .comment { color: var(--text-dim); }
+
+  /* Scrollable content */
+  .scroll-body {
+    max-height: 480px;
+    overflow-y: auto;
+  }
+
+  .scroll-body::-webkit-scrollbar { width: 4px; }
+  .scroll-body::-webkit-scrollbar-track { background: transparent; }
+  .scroll-body::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    AlertHQ
+  </div>
+  <button class="nav-btn active" onclick="show('moodboard')">Moodboard</button>
+  <button class="nav-btn" onclick="show('tokens')">Design tokens</button>
+  <button class="nav-btn" onclick="show('layout')">Layout</button>
+  <button class="nav-btn" onclick="show('components')">Components</button>
+  <button class="nav-btn" onclick="show('pages')">Pages</button>
+</nav>
+
+<!-- MOODBOARD -->
+<section id="moodboard" class="active">
+  <div class="scroll-body">
+  <p class="section-title">Design direction</p>
+  <h2>Industrial dark. Operator-first.</h2>
+  <p class="subtitle">AlertHQ is a tool used under pressure. The aesthetic should feel like a control room — precise, dense, fast to scan. No gradients, no playfulness. Information hierarchy is everything.</p>
+
+  <div class="card">
+    <p class="card-label">Visual principles</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="padding:14px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;margin-bottom:4px;color:var(--text)">Information density</div>
+        <div style="font-size:11px;color:var(--text-muted)">Operators need to see a lot at once. Compact rows, small labels, meaningful colour only.</div>
+      </div>
+      <div style="padding:14px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;margin-bottom:4px;color:var(--text)">Severity-first colour</div>
+        <div style="font-size:11px;color:var(--text-muted)">Colour encodes severity, not branding. Red means critical, always. Never use red for anything else.</div>
+      </div>
+      <div style="padding:14px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;margin-bottom:4px;color:var(--text)">Monospace data</div>
+        <div style="font-size:11px;color:var(--text-muted)">Timestamps, IDs, metric names, host labels — always monospace. Aligns columns, looks authoritative.</div>
+      </div>
+      <div style="padding:14px;background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:500;margin-bottom:4px;color:var(--text)">No motion for motion's sake</div>
+        <div style="font-size:11px;color:var(--text-muted)">Animation only when it conveys state change — e.g. a firing alert pulsing. Never decorative.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Tone references</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.8">
+      <span style="color:var(--text)">PagerDuty</span> — information density, dark theme ·
+      <span style="color:var(--text)">Grafana</span> — monospace data, severity colour ·
+      <span style="color:var(--text)">Linear</span> — compact rows, keyboard-first ·
+      <span style="color:var(--text)">Datadog</span> — timeline, alert feed density<br>
+      <br>
+      What AlertHQ <em style="color:var(--text)">isn't</em>: Notion (too soft), Jira (too noisy), Slack (too conversational).
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Colour mood</p>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <div style="flex:1;height:36px;background:#0E0F12;border-radius:4px;border:1px solid var(--border)"></div>
+      <div style="flex:1;height:36px;background:#141519;border-radius:4px;border:1px solid var(--border)"></div>
+      <div style="flex:1;height:36px;background:#1C1D22;border-radius:4px;border:1px solid var(--border)"></div>
+      <div style="flex:1;height:36px;background:#24252B;border-radius:4px;border:1px solid var(--border)"></div>
+      <div style="flex:1;height:36px;background:#4F6EF7;border-radius:4px"></div>
+      <div style="flex:1;height:36px;background:#E84040;border-radius:4px"></div>
+      <div style="flex:1;height:36px;background:#F59E0B;border-radius:4px"></div>
+      <div style="flex:1;height:36px;background:#22C55E;border-radius:4px"></div>
+      <div style="flex:1;height:36px;background:#38BDF8;border-radius:4px"></div>
+    </div>
+    <div style="font-size:10px;color:var(--text-dim);font-family:var(--mono)">
+      #0E0F12 · #141519 · #1C1D22 · #24252B · #4F6EF7 · #E84040 · #F59E0B · #22C55E · #38BDF8
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- TOKENS -->
+<section id="tokens">
+  <div class="scroll-body">
+  <p class="section-title">Design tokens</p>
+  <h2>Colour, type &amp; spacing</h2>
+  <p class="subtitle">All tokens as CSS variables. Use these everywhere — never hardcode hex in components.</p>
+
+  <div class="card">
+    <p class="card-label">Background layers</p>
+    <div class="color-grid">
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#0E0F12"></div>
+        <div class="color-info">
+          <div class="color-name">--bg-base</div>
+          <div class="color-hex">#0E0F12</div>
+          <div class="color-usage">App background</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#141519"></div>
+        <div class="color-info">
+          <div class="color-name">--bg-raised</div>
+          <div class="color-hex">#141519</div>
+          <div class="color-usage">Sidebar, panels</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#1C1D22"></div>
+        <div class="color-info">
+          <div class="color-name">--bg-overlay</div>
+          <div class="color-hex">#1C1D22</div>
+          <div class="color-usage">Cards, rows</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#24252B"></div>
+        <div class="color-info">
+          <div class="color-name">--bg-subtle</div>
+          <div class="color-hex">#24252B</div>
+          <div class="color-usage">Hover, active</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Severity colours — semantically fixed</p>
+    <div class="color-grid">
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#E84040"></div>
+        <div class="color-info">
+          <div class="color-name">--critical</div>
+          <div class="color-hex">#E84040</div>
+          <div class="color-usage">P1 / Critical only</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#F59E0B"></div>
+        <div class="color-info">
+          <div class="color-name">--high</div>
+          <div class="color-hex">#F59E0B</div>
+          <div class="color-usage">P2 / High only</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#F97316"></div>
+        <div class="color-info">
+          <div class="color-name">--medium</div>
+          <div class="color-hex">#F97316</div>
+          <div class="color-usage">P3 / Medium only</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#38BDF8"></div>
+        <div class="color-info">
+          <div class="color-name">--low</div>
+          <div class="color-hex">#38BDF8</div>
+          <div class="color-usage">P4 / Low / Info</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#22C55E"></div>
+        <div class="color-info">
+          <div class="color-name">--resolved</div>
+          <div class="color-hex">#22C55E</div>
+          <div class="color-usage">Resolved / OK</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#A78BFA"></div>
+        <div class="color-info">
+          <div class="color-name">--acknowledged</div>
+          <div class="color-hex">#A78BFA</div>
+          <div class="color-usage">Acknowledged state</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Brand / accent</p>
+    <div class="color-grid">
+      <div class="color-chip">
+        <div class="color-swatch" style="background:#4F6EF7"></div>
+        <div class="color-info">
+          <div class="color-name">--accent</div>
+          <div class="color-hex">#4F6EF7</div>
+          <div class="color-usage">Primary CTA, links, focus</div>
+        </div>
+      </div>
+      <div class="color-chip">
+        <div class="color-swatch" style="background:rgba(79,110,247,0.15)"></div>
+        <div class="color-info">
+          <div class="color-name">--accent-dim</div>
+          <div class="color-hex">rgba(79,110,247,.15)</div>
+          <div class="color-usage">Active nav, selected row</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Typography</p>
+    <div class="type-sample">
+      <div class="type-label">Display / page headings</div>
+      <div class="type-preview" style="font-size:22px;font-weight:500;letter-spacing:-0.5px;color:var(--text)">Active Incidents</div>
+      <div class="type-meta">Geist · 22px · weight 500 · tracking -0.5px</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-label">Section headings</div>
+      <div class="type-preview" style="font-size:16px;font-weight:500;color:var(--text)">Alert feed</div>
+      <div class="type-meta">Geist · 16px · weight 500</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-label">Body / row labels</div>
+      <div class="type-preview" style="font-size:13px;color:var(--text)">High CPU usage on prod-db-03</div>
+      <div class="type-meta">Geist · 13px · weight 400</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-label">Metadata / timestamps / IDs — always mono</div>
+      <div class="type-preview" style="font-size:11px;font-family:var(--mono);color:var(--text-muted)">2025-04-29T14:22:31Z · INC-0041 · node_exporter</div>
+      <div class="type-meta">Geist Mono · 11px · weight 400</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-label">Section labels / nav labels</div>
+      <div class="type-preview" style="font-size:10px;font-family:var(--mono);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim)">Monitoring</div>
+      <div class="type-meta">Geist Mono · 10px · weight 500 · uppercase · +0.08em tracking</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Spacing scale</p>
+    <div class="space-row"><div class="space-block" style="width:4px"></div><span class="space-label">4px — icon gap, badge padding</span></div>
+    <div class="space-row"><div class="space-block" style="width:8px"></div><span class="space-label">8px — inline element gap</span></div>
+    <div class="space-row"><div class="space-block" style="width:12px"></div><span class="space-label">12px — row internal padding, small card padding</span></div>
+    <div class="space-row"><div class="space-block" style="width:16px"></div><span class="space-label">16px — card padding, section gap</span></div>
+    <div class="space-row"><div class="space-block" style="width:24px"></div><span class="space-label">24px — between cards, sidebar padding</span></div>
+    <div class="space-row"><div class="space-block" style="width:32px"></div><span class="space-label">32px — page section gap</span></div>
+    <div class="space-row"><div class="space-block" style="width:48px"></div><span class="space-label">48px — major section dividers</span></div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Border radius</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:var(--bg3);border:1px solid var(--border-md);border-radius:4px;margin:0 auto 6px"></div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">4px<br>tags/badges</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:var(--bg3);border:1px solid var(--border-md);border-radius:6px;margin:0 auto 6px"></div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">6px<br>inputs/buttons</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:var(--bg3);border:1px solid var(--border-md);border-radius:10px;margin:0 auto 6px"></div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">10px<br>cards</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;background:var(--bg3);border:1px solid var(--border-md);border-radius:14px;margin:0 auto 6px"></div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">14px<br>modals/panels</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:48px;height:24px;background:var(--bg3);border:1px solid var(--border-md);border-radius:99px;margin:0 auto 18px"></div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-muted)">99px<br>severity pills</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<section id="layout">
+  <div class="scroll-body">
+  <p class="section-title">Layout structure</p>
+  <h2>Shell &amp; page structure</h2>
+  <p class="subtitle">Fixed sidebar, fixed topbar, scrollable content area. Dense but scannable.</p>
+
+  <div class="card">
+    <p class="card-label">App shell — annotated mockup</p>
+    <div class="layout-mock">
+      <div class="mock-topbar">
+        <div style="font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px">
+          <div style="width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 6px var(--accent)"></div>
+          AlertHQ
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <span class="badge firing"><span class="badge-dot" style="background:var(--red)"></span>3 firing</span>
+          <div style="width:26px;height:26px;background:var(--accent-dim);border-radius:50%;border:1px solid var(--border-md)"></div>
+        </div>
+      </div>
+      <div class="mock-body">
+        <div class="mock-sidebar">
+          <p class="mock-section-label">Monitoring</p>
+          <div class="mock-nav-item"><div class="icon-box"></div>Dashboard</div>
+          <div class="mock-nav-item active"><div class="icon-box"></div>Alerts</div>
+          <div class="mock-nav-item"><div class="icon-box"></div>Incidents</div>
+          <p class="mock-section-label" style="margin-top:8px">Config</p>
+          <div class="mock-nav-item"><div class="icon-box"></div>Templates</div>
+          <div class="mock-nav-item"><div class="icon-box"></div>Settings</div>
+          <div style="flex:1"></div>
+          <div style="padding:8px;background:var(--red-dim);border-radius:var(--radius);border:1px solid rgba(232,64,64,0.15);margin-top:8px">
+            <div style="font-size:10px;color:var(--red);font-family:var(--mono);font-weight:500">3 CRITICAL</div>
+            <div style="font-size:9px;color:rgba(232,64,64,0.6);margin-top:1px">Requires attention</div>
+          </div>
+        </div>
+        <div class="mock-main">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:14px;font-weight:500">Alert feed</div>
+            <div style="display:flex;gap:6px">
+              <span class="tag">All</span>
+              <span class="tag">Firing</span>
+              <span class="tag">Resolved</span>
+            </div>
+          </div>
+          <div class="mock-grid">
+            <div class="mock-stat">
+              <div class="mock-stat-label">FIRING</div>
+              <div class="mock-stat-value" style="color:var(--red)">12</div>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-label">ACKNOWLEDGED</div>
+              <div class="mock-stat-value" style="color:var(--purple)">4</div>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-label">RESOLVED 24H</div>
+              <div class="mock-stat-value" style="color:var(--green)">31</div>
+            </div>
+          </div>
+          <div class="mock-table">
+            <div class="mock-table-row header">
+              <div class="mock-col-name">Alert</div>
+              <div class="mock-col-sev">Severity</div>
+              <div class="mock-col-src">Source</div>
+              <div class="mock-col-age">Age</div>
+            </div>
+            <div class="mock-table-row">
+              <div class="mock-col-name" style="font-weight:500;font-size:11px">High CPU — prod-api-01</div>
+              <div class="mock-col-sev"><span class="badge critical btn-sm">Critical</span></div>
+              <div class="mock-col-src">prometheus</div>
+              <div class="mock-col-age">14m</div>
+            </div>
+            <div class="mock-table-row">
+              <div class="mock-col-name" style="font-weight:500;font-size:11px">Disk usage &gt;90%</div>
+              <div class="mock-col-sev"><span class="badge high btn-sm">High</span></div>
+              <div class="mock-col-src">node_exporter</div>
+              <div class="mock-col-age">1h 3m</div>
+            </div>
+            <div class="mock-table-row">
+              <div class="mock-col-name" style="font-weight:500;font-size:11px">HTTP 5xx spike</div>
+              <div class="mock-col-sev"><span class="badge medium btn-sm">Medium</span></div>
+              <div class="mock-col-src">grafana</div>
+              <div class="mock-col-age">2h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.7">
+      <strong style="color:var(--text);font-weight:500">Sidebar:</strong> 220px fixed · <strong style="color:var(--text);font-weight:500">Topbar:</strong> 48px fixed · <strong style="color:var(--text);font-weight:500">Content:</strong> flex-1, scrollable · <strong style="color:var(--text);font-weight:500">Min width:</strong> 1024px
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Page structure — consistent pattern</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:2">
+      <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px"><span style="font-family:var(--mono);color:var(--accent);width:80px;flex-shrink:0">Page header</span><span>Page title (20px/500) + subtitle + primary action button — always top right</span></div>
+      <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px"><span style="font-family:var(--mono);color:var(--accent);width:80px;flex-shrink:0">Stat strip</span><span>3–4 key numbers. Only on Dashboard and list pages. Not on detail pages.</span></div>
+      <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px"><span style="font-family:var(--mono);color:var(--accent);width:80px;flex-shrink:0">Filter bar</span><span>Search + filter chips. Inline with page header or below it.</span></div>
+      <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px"><span style="font-family:var(--mono);color:var(--accent);width:80px;flex-shrink:0">Content</span><span>Table or card list. Full width. No extra card wrapper.</span></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section id="components">
+  <div class="scroll-body">
+  <p class="section-title">Component reference</p>
+  <h2>Core UI components</h2>
+  <p class="subtitle">Reusable patterns with clear rules on when and how to use each.</p>
+
+  <div class="card">
+    <p class="card-label">Severity badges — pill style, always monospace</p>
+    <div class="badge-grid">
+      <span class="badge critical"><span class="badge-dot" style="background:var(--red)"></span>Critical</span>
+      <span class="badge high"><span class="badge-dot" style="background:var(--amber)"></span>High</span>
+      <span class="badge medium"><span class="badge-dot" style="background:#F97316"></span>Medium</span>
+      <span class="badge low"><span class="badge-dot" style="background:var(--blue)"></span>Low</span>
+      <span class="badge resolved"><span class="badge-dot" style="background:var(--green)"></span>Resolved</span>
+      <span class="badge ack"><span class="badge-dot" style="background:var(--purple)"></span>Acknowledged</span>
+    </div>
+    <div class="badge-grid">
+      <span class="badge firing"><span class="badge-dot" style="background:var(--red)"></span>Firing</span>
+      <span class="badge pending"><span class="badge-dot" style="background:var(--amber)"></span>Pending</span>
+      <span class="badge inactive"><span class="badge-dot" style="background:var(--text-dim)"></span>Inactive</span>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);margin-top:8px">Severity badges = rounded-full. Status badges = same style, different semantic meaning. Never mix.</div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Alert row — the most common element</p>
+    <div class="alert-row">
+      <div class="alert-sev-bar" style="background:var(--red)"></div>
+      <div>
+        <div class="alert-name">High CPU usage — prod-api-01</div>
+        <div class="alert-meta">prometheus · node_cpu_seconds_total &gt; 0.9 · <span style="color:var(--text-dim)">INC-0041</span></div>
+      </div>
+      <div class="alert-right">
+        <span class="badge critical" style="margin-bottom:4px;display:inline-flex">Critical</span>
+        <div class="alert-meta" style="display:block">14m ago</div>
+      </div>
+    </div>
+    <div class="alert-row">
+      <div class="alert-sev-bar" style="background:var(--amber)"></div>
+      <div>
+        <div class="alert-name">Disk usage above 90% — storage-01</div>
+        <div class="alert-meta">node_exporter · disk_free_bytes &lt; 10GB</div>
+      </div>
+      <div class="alert-right">
+        <span class="badge ack" style="margin-bottom:4px;display:inline-flex">Ack'd</span>
+        <div class="alert-meta" style="display:block">1h 3m ago</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);margin-top:10px">Left coloured bar = severity at a glance. Right = status badge + age. Middle = name + source + linked incident ID.</div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Incident cards — left border encodes severity</p>
+    <div class="incident-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span class="badge critical">Critical</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text-dim)">INC-0041</span>
+      </div>
+      <div class="incident-title">Database connection pool exhausted</div>
+      <div class="incident-meta">
+        <span>Opened 14m ago</span>
+        <span style="color:var(--text-dim)">·</span>
+        <span>3 alerts linked</span>
+        <span style="color:var(--text-dim)">·</span>
+        <span style="color:var(--purple)">Acknowledged by riley@</span>
+      </div>
+    </div>
+    <div class="incident-card high">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span class="badge high">High</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text-dim)">INC-0040</span>
+      </div>
+      <div class="incident-title">Elevated HTTP 5xx rate on API gateway</div>
+      <div class="incident-meta">
+        <span>Opened 2h ago</span>
+        <span style="color:var(--text-dim)">·</span>
+        <span>1 alert linked</span>
+        <span style="color:var(--text-dim)">·</span>
+        <span style="color:var(--text-muted)">Unassigned</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="component-grid">
+    <div class="comp-box">
+      <p class="comp-label">Buttons</p>
+      <div class="btn-group">
+        <button class="btn btn-primary">Create incident</button>
+        <button class="btn btn-ghost">Cancel</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-danger btn-sm">Resolve</button>
+        <button class="btn btn-ghost btn-sm">Acknowledge</button>
+      </div>
+    </div>
+    <div class="comp-box">
+      <p class="comp-label">Form inputs</p>
+      <label class="form-label">Incident title</label>
+      <input class="mock-input" value="DB connection exhausted" readonly>
+      <label class="form-label">Severity</label>
+      <select class="mock-select">
+        <option>Critical</option>
+        <option>High</option>
+        <option>Medium</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Event timeline — used on incident detail</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot critical"></div>
+        <div class="timeline-title">Incident created from template</div>
+        <div class="timeline-time">2025-04-29T14:08:00Z · system</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot active"></div>
+        <div class="timeline-title">Acknowledged by riley@acme.com</div>
+        <div class="timeline-time">2025-04-29T14:12:31Z · riley@</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-title">Comment added: "Scaling DB pool to 200"</div>
+        <div class="timeline-time">2025-04-29T14:18:00Z · riley@</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Data / config display — monospace code blocks</p>
+    <div class="code">
+      <div><span class="comment"># Prometheus alert rule</span></div>
+      <div><span class="key">alert:</span> <span class="str">HighCPUUsage</span></div>
+      <div><span class="key">expr:</span> <span class="val">rate(node_cpu_seconds_total[5m]) &gt; 0.9</span></div>
+      <div><span class="key">for:</span> <span class="str">5m</span></div>
+      <div><span class="key">severity:</span> <span class="str">critical</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted)">Use for alert rule display, template payloads, webhook bodies. Geist Mono, 11px, syntax highlight with accent/green/amber.</div>
+  </div>
+  </div>
+</section>
+
+<!-- PAGES -->
+<section id="pages">
+  <div class="scroll-body">
+  <p class="section-title">Page-level guidance</p>
+  <h2>Per-page design notes</h2>
+  <p class="subtitle">Specific layout and component decisions for each route.</p>
+
+  <div class="card">
+    <p class="card-label">/dashboard</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.9">
+      <div><span style="color:var(--text);font-weight:500">Stat strip:</span> 4 numbers — Firing, Acknowledged, Open Incidents, Resolved (24h). Use coloured values, not coloured backgrounds.</div>
+      <div><span style="color:var(--text);font-weight:500">Two-column below:</span> Left = recent alert feed (compact rows). Right = open incidents list.</div>
+      <div><span style="color:var(--text);font-weight:500">No charts</span> in v1 — Grafana handles that. Keep dashboard as a status summary, not a metrics dashboard.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">/alerts</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.9">
+      <div><span style="color:var(--text);font-weight:500">Table layout</span> — not cards. Alerts are dense data, tables scale better.</div>
+      <div><span style="color:var(--text);font-weight:500">Columns:</span> Severity bar (3px) · Alert name · Source · Labels/tags · Status · Linked incident · Age. All sortable.</div>
+      <div><span style="color:var(--text);font-weight:500">Filter bar:</span> Status chips (All / Firing / Pending / Resolved) + search. Persistent across sessions via URL params.</div>
+      <div><span style="color:var(--text);font-weight:500">Row click:</span> Slide-over panel (not full page nav) for alert detail + "Create incident" CTA.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">/incidents &amp; /incidents/:id</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.9">
+      <div><span style="color:var(--text);font-weight:500">List:</span> Card layout (not table) — incidents have more metadata than alerts. Left border = severity.</div>
+      <div><span style="color:var(--text);font-weight:500">Detail:</span> Two-column — left (flex-1) = incident info + linked alerts + description. Right (320px fixed) = timeline + actions.</div>
+      <div><span style="color:var(--text);font-weight:500">Actions:</span> Acknowledge, Resolve, Link alert, Add comment — always visible in right panel, not buried in menus.</div>
+      <div><span style="color:var(--text);font-weight:500">Status transitions:</span> Open → Acknowledged → Resolved. Show as a simple 3-step stepper at the top of the detail page.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">/incidents/new — create from template</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.9">
+      <div><span style="color:var(--text);font-weight:500">Step 1:</span> Select template (card grid, searchable). Selected template highlighted with accent border.</div>
+      <div><span style="color:var(--text);font-weight:500">Step 2:</span> Pre-filled form from template — title, severity, description, runbook URL. All editable.</div>
+      <div><span style="color:var(--text);font-weight:500">Step 3:</span> Link alerts (multi-select from firing alerts list).</div>
+      <div><span style="color:var(--text);font-weight:500">Keep it single-page</span> — don't use a wizard with separate route steps. Just scroll sections with a sticky step indicator.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">/templates &amp; /templates/:id/edit</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.9">
+      <div><span style="color:var(--text);font-weight:500">List:</span> Card grid (2-col). Card shows name, description, severity default, last used.</div>
+      <div><span style="color:var(--text);font-weight:500">Editor:</span> Split — left = form fields (name, severity, description, runbook URL, custom fields). Right = live preview of what the incident will look like when created.</div>
+      <div><span style="color:var(--text);font-weight:500">Custom fields:</span> Operators can add key-value pairs to the template. Drag to reorder. Shown in incident detail.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-label">Slide-over panel — reusable pattern</p>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.9">
+      <div>Use for alert detail, quick incident view, template preview. Slides in from the right at 480px wide.</div>
+      <div>Background dims to <span style="font-family:var(--mono)">rgba(0,0,0,0.5)</span> but stays interactive — user can still see the list behind it.</div>
+      <div>Close on Escape or clicking the backdrop. Never use a full-page route for content that's a subset of the list view.</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

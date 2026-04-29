@@ -1,0 +1,78 @@
+body {
+  background-color: #0e0f12;
+  color: #f3f3f3;
+  font-family: "Geist", sans-serif;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+#root {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.navbar {
+  background-color: #141519;
+  padding-left: 10px;
+  width: 210px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.nav-title {
+  margin-bottom: 40px;
+  margin-left: 10px;
+}
+
+.nav-body {
+  margin-left: 10px;
+}
+
+.nav-bottom {
+  margin-top: auto;
+  /* margin-bottom: 10px; */
+  margin-left: 10px;
+}
+
+.nav-item:hover {
+  /* !! Change this to be a border box !! */
+  color: #4f6ef7;
+  cursor: pointer;
+}
+
+.nav-alerts {
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 15px;
+}
+
+.nav-alert-card {
+  background-color: #e840404d;
+  color: #e84040;
+  border: 1px solid;
+  border-color: #e84040;
+  border-radius: 6px;
+}
+
+.nav-alert-card-heading {
+  font-weight: 400;
+  margin: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.nav-alert-card-body {
+  margin-top: 0px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+.page-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-left: 10px;
+}
