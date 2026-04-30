@@ -16,13 +16,15 @@ function Sidebar() {
                 <p className="side-item">Settings</p>
             </div>
             <div className="side-alerts">
-                <div className="side-alert-card">
-                    <p className="side-alert-card-heading">1 Critical</p>
-                    <p className="side-alert-card-body">Requires Attention</p>
-                </div>
+                <Link to="/alerts" style={{ textDecoration: "none", color: "inherit" }}>
+                    <div className="side-alert-card">
+                        <p className="side-alert-card-heading">1 Critical</p>
+                        <p className="side-alert-card-body">Requires Attention</p>
+                    </div>
+                </Link>
             </div>
         </aside>
     )
 }
 
-export default Sidebar;
+export default Sidebar; 
